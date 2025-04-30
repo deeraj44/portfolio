@@ -1,273 +1,695 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Deeraj's Portfolio</title>
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-            <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">Deeraj Nair</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.png" alt="..." /></span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Certifications</a></li>
-                </ul>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        dark: '#1E293B',
+                        darker: '#0F172A',
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: currentColor;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .skill-pill {
+            transition: transform 0.2s ease;
+        }
+        
+        .skill-pill:hover {
+            transform: scale(1.05);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .light .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .wave {
+            animation: wave 2.5s infinite;
+            transform-origin: 70% 70%;
+            display: inline-block;
+        }
+        
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-darker dark:text-gray-200 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-effect">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-xl font-bold text-primary">Portfolio</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-4">
+                        <a href="#home" class="nav-link px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#about" class="nav-link px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#projects" class="nav-link px-3 py-2 text-sm font-medium">Projects</a>
+                        <a href="#skills" class="nav-link px-3 py-2 text-sm font-medium">Skills</a>
+                        <a href="#contact" class="nav-link px-3 py-2 text-sm font-medium">Contact</a>
+                        <button id="theme-toggle" class="p-2 rounded-full focus:outline-none">
+                            <i class="fas fa-moon text-gray-800 dark:text-yellow-300"></i>
+                            <i class="fas fa-sun text-gray-200 dark:hidden"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="p-2 rounded-md focus:outline-none">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-        </nav>
-        <!-- Page Content-->
-        <div class="container-fluid p-0">
-            <!-- About-->
-            <section class="resume-section" id="about">
-                <div class="resume-section-content">
-                    <h1 class="mb-0">
-                        Deeraj
-                        <span class="text-primary">Nair</span>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-effect">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-base font-medium">Home</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium">About</a>
+                <a href="#projects" class="block px-3 py-2 text-base font-medium">Projects</a>
+                <a href="#skills" class="block px-3 py-2 text-base font-medium">Skills</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium">Contact</a>
+                <button id="mobile-theme-toggle" class="block px-3 py-2 text-left text-base font-medium">
+                    Toggle Theme
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        Hi, I'm <span class="text-primary">John Doeee</span> <span class="wave">👋</span>
                     </h1>
-                    <div class="subheading mb-5">
-                        Bloomington, Indiana · (930) 333-6486  ·
-                        <a href="mailto:deerajnair44@gmail.com">deerajnair44@gmail.com</a>
-                    </div>
-                    <p class="lead mb-5">I'm a passionate Data Science graduate student with a strong foundation in Python, SQL, and data visualization tools like Power BI. My journey into data began with a deep curiosity for turning raw information into actionable insights, especially in the Supply Chain domain. Through hands-on projects and internships, I’ve developed machine learning models, built interactive dashboards, and tackled data inconsistencies to uncover meaningful patterns. I’m driven to help businesses make data-backed decisions that optimize performance and efficiency.</p>
-                    <div class="social-icons">
-                        <a class="social-icon" href="https://www.linkedin.com/in/deeraj-nair-1a7403214/"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="https://github.com/deeraj44"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Education-->
-            <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Education</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Indiana University, Bloomington</h3>
-                            <div class="subheading mb-3">Master of Science (MS)</div>
-                            <div>Data Science</div>
-                            <p>GPA: 3.64</p>
-                            <p>Relevant Courses: Data Mining, Advanced Database Concepts, Introduction to Statistics, Big Data in Economics, Data Visualization, Database Design</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2023 - Present</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">SRM Institute of Science and Technology</h3>
-                            <div class="subheading mb-3">Bachelor of technology (B.Tech)</div>
-                            <p>GPA: 8.87</p>
-                            <p>Relevant Courses: Artificial Intelligence, Data Structures and Algorithms, Database Management Systems</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">August 2019 - May 2023</span></div>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-secondary">
+                        Full Stack Developer
+                    </h2>
+                    <p class="text-lg mb-8 max-w-lg">
+                        I build exceptional digital experiences that are fast, accessible, and visually appealing.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition duration-300">
+                            Contact Me
+                        </a>
+                        <a href="#projects" class="px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 transition duration-300">
+                            View Work
+                        </a>
                     </div>
                 </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Experience-->
-            <section class="resume-section" id="experience">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Work Experience</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Data Science Intern</h3>
-                            <div class="subheading mb-3">DataMingle Analytics Pvt Ltd</div>
-                            <p>Analyzed and refined a sophisticated backorder dataset using Python, conducting in-depth exploratory data analysis and feature selection to optimize the machine learning model performance.</p>
-                            <p>Implemented a machine learning model from scratch for the backorder dataset, achieving an accuracy rate of 90% and reducing the backorder rate by 15%.</p>
-                            <p>Utilized Power BI to create interactive data visualizations, effectively presenting insights from the machine learning model to key stakeholders, resulting in informed decision-making processes.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">June 2024 - July 2024</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Data Science Intern</h3>
-                            <div class="subheading mb-3">Empliance Technologies Pvt Ltd</div>
-                            <p>Automated data cleaning processes using Python and Pandas, reducing processing time by 50% and minimizing errors in data analysis, showcasing advanced programming skills and attention to detail.</p>
-                            <p>Analyzed customer feedback data using machine learning algorithms to identify key patterns and trends, leading to a 20% increase in customer satisfaction scores and demonstrating strong analytical abilities.</p>
-                            <p>Developed a predictive analytics model using python to forecast customer churn rates, resulting in a 15% reduction in customer attrition and showcasing expertise in data analysis and forecasting.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">October 2022 - April 2023</span></div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">Data Science Intern</h3>
-                            <div class="subheading mb-3">SkillVertex</div>
-                            <p>Utilized advanced data collection techniques to gather and cleanse over multiple data sets, resulting in a comprehensive analysis of market trends and customer behavior</p>
-                            <p>Developed proficiency in essential machine learning algorithms, demonstrating a strong foundation in data science methodologies.</p>
-                            <p>Collaborated with cross-functional teams on projects that applied data visualization techniques to present complex findings in a clear and concise manner, improving decision-making processes by 30%.</p>
-                        </div>
-                        <div class="flex-shrink-0"><span class="text-primary">September 2020 - November 2020</span></div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80">
+                        <div class="absolute inset-0 bg-primary rounded-full opacity-20 animate-pulse"></div>
+                        <div class="absolute inset-4 bg-secondary rounded-full opacity-20 animate-pulse delay-100"></div>
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
+                             alt="Profile" 
+                             class="relative w-full h-full rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-xl">
                     </div>
                 </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Projects-->
-            <section class="resume-section" id="experience">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Projects</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">
-                                <a href="https://github.com/deeraj44/Backorder-Prediction" 
-                                   style="color: black; text-decoration: none;" 
-                                   onmouseover="this.style.color='orange';" 
-                                   onmouseout="this.style.color='black';">
-                                   Backorder Prediction
-                                </a>
-                            </h3>
-                            <p>Executed a comprehensive data science workflow to ensure robust predictions, encompassing meticulous data cleaning and preparation, in-depth exploratory data analysis (EDA), significant feature engineering and selection, and the development of a machine learning model from scratch on a dataset with over 1 million observations.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                                <h3 class="mb-0">
-                                <a href="https://github.com/deeraj44/Sales-Analytics-Dashboard-in-Power-BI" 
-                                   style="color: black; text-decoration: none;" 
-                                   onmouseover="this.style.color='orange';" 
-                                   onmouseout="this.style.color='black';">
-                                   Sales Analytics Dashboard
-                                </a>
-                            </h3>
-                            <p>Created a dynamic Power BI dashboard to optimize sales, cost, shipment, and profitability analysis across regions, delivering actionable insights on monthly trends and high-performing products to support strategic business decisions.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                                <h3 class="mb-0">
-                                <a href="https://deeraj44.github.io/NYC-Vegan-Restaurants/" 
-                                   style="color: black; text-decoration: none;" 
-                                   onmouseover="this.style.color='orange';" 
-                                   onmouseout="this.style.color='black';">
-                                   Exploring NYC’s Vegetarian and Vegan Dining Options
-                                </a>
-                                </h3>
-                            <p>Scraped, analyzed, and cleaned NYC vegan and vegetarian restaurant datasets to ensure data integrity. Designed visualizations and provided insights into restaurant density and customer trends to support strategic decisions.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">
-                                <a href="https://public.tableau.com/app/profile/deeraj3644/viz/BritishAirwaysReviewAnalysis_17425221486360/Dashboard1" 
-                                   style="color: black; text-decoration: none;" 
-                                   onmouseover="this.style.color='orange';" 
-                                   onmouseout="this.style.color='black';">
-                                   British Airways Customer Satisfaction Analysis Dashboard
-                                </a>
-                            </h3>
-                            <p>Designed an interactive Tableau dashboard analyzing British Airways customer reviews, uncovering key insights into service performance, regional satisfaction trends, and aircraft-specific ratings; empowering data-driven decisions to improve customer experience.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">
-                                <a href="https://github.com/MDhopate/Data-Mining-Project" 
-                                   style="color: black; text-decoration: none;" 
-                                   onmouseover="this.style.color='orange';" 
-                                   onmouseout="this.style.color='black';">
-                                   Classification of Toxic Comments
-                                </a>
-                            </h3>
-                            <p>Contributed to a pivotal group project aimed at mitigating social media toxicity. Employed NLP and various data visualization techniques to categorize comments into five toxicity levels. Applied multiple machine learning models to achieve optimal classification accuracy, including a novel sarcastic comment classifier.</p>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h3 class="mb-0">
-                                <a href="https://github.com/deeraj44/Flipkart-smartphone-data-scraper" 
-                                   style="color: black; text-decoration: none;" 
-                                   onmouseover="this.style.color='orange';" 
-                                   onmouseout="this.style.color='black';">
-                                   Flipkart Data Scraper
-                                </a>
-                            </h3>
-                            <p>Engineered a sophisticated data scraper for Flipkart, extracting detailed smartphone specifications. Leveraged BeautifulSoup forefficient web scraping, producing an Excel database ideal for advanced product analysis and market insights.</p>
-                        </div>
-                    </div>
-            </section>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-100 dark:bg-dark">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">About Me</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
             
-            <!-- Skills-->
-            <section class="resume-section" id="skills">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Skills</h2>
-                    <div class="subheading mb-3">Programming</div>
-                    <p class="skills-text">
-                       Python, R, SQL (MySQL, PostgreSQL, MongoDB)
-                    </p>
-                    <div class="subheading mb-3">Visualization</div>
-                    <p class="skills-text">
-                       Power BI, Tableau, Looker Studio, Folium, Plotly
-                    </p>
-                     <div class="subheading mb-3">Analytics Modeling</div>
-                    <p class="skills-text">
-                       Predictive Modeling, Monte Carlo Simulation, ETL, Feature Engineering, Data Cleansing, Data Modeling, Data Scraping,
-Statistical Analysis, Machine Learning, Supply Chain, Data Analysis, Business Intelligence
-                    </p>
-                     <div class="subheading mb-3">Tools</div>
-                    <p class="skills-text">
-                        MS Excel (VLOOKUP, PivotTables, Power Query, Data and Trend Analysis, DAX), MS Office, Git, ERD
-                    </p>
-                    <div class="subheading mb-3">Soft Skills</div>
-                    <p class="skills-text">
-                       Communication, Problem Solving, Time Management, Decision Making, Teamwork, Client Interaction
-                    </p>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/3 flex justify-center">
+                    <div class="relative w-64 h-64">
+                        <div class="absolute -inset-4 bg-primary/10 rounded-2xl -rotate-6"></div>
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
+                             alt="About" 
+                             class="relative w-full h-full rounded-xl object-cover shadow-lg">
+                    </div>
                 </div>
                 
-            </section>
-            
-            <style>
-                .skills-text {
-                    font-size: 1em;
-                    line-height: 1.5;
-                    color: #333;
-                }
-            </style>
-            </section>
-            <hr class="m-0" />
-
-            <!-- Awards-->
-            <section class="resume-section" id="awards">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Certifications</h2>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Data Science and Machine Learning: Making Data-Driven Decisions - Massachusetts Institute of Technology
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Business and Operation Analytics - NITIE, Prof. David Simchi-Levi
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Supply Chain Management Specializations from Rutgers University: Prof. Rudolf Leuschner
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Applied Generative AI for Digital Transformation: in progress - Massachusetts Institute of Technology
-                        </li>
-                    </ul>
+                <div class="md:w-2/3">
+                    <h3 class="text-2xl font-semibold mb-6">Who am I?</h3>
+                    <p class="mb-6 text-lg">
+                        I'm a passionate Full Stack Developer with 5+ years of experience creating web applications. 
+                        I specialize in JavaScript technologies across the whole stack (React, Node.js, Express, MongoDB).
+                    </p>
+                    <p class="mb-6 text-lg">
+                        My approach combines technical expertise with an eye for design to deliver products that are both 
+                        powerful and intuitive. I believe in writing clean, efficient code and creating seamless user experiences.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div>
+                            <p class="font-medium"><span class="text-primary">Name:</span> John Doe</p>
+                            <p class="font-medium"><span class="text-primary">Email:</span> john@example.com</p>
+                        </div>
+                        <div>
+                            <p class="font-medium"><span class="text-primary">From:</span> San Francisco, CA</p>
+                            <p class="font-medium"><span class="text-primary">Freelance:</span> Available</p>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition duration-300">
+                        Download CV <i class="fas fa-download ml-2"></i>
+                    </a>
                 </div>
-            </section>
+            </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">My Projects</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card bg-white dark:bg-dark rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+                             alt="Project 1" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold">E-commerce Platform</h3>
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-gray-500 hover:text-primary">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-primary">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            A full-featured e-commerce platform with payment integration, product management, and user authentication.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full">React</span>
+                            <span class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 rounded-full">Node.js</span>
+                            <span class="text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 rounded-full">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card bg-white dark:bg-dark rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" 
+                             alt="Project 2" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold">Task Management App</h3>
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-gray-500 hover:text-primary">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-primary">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            A collaborative task management application with real-time updates, drag-and-drop interface, and team features.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full">React</span>
+                            <span class="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 rounded-full">Firebase</span>
+                            <span class="text-xs px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200 rounded-full">Tailwind CSS</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card bg-white dark:bg-dark rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+                             alt="Project 3" 
+                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold">Social Media Dashboard</h3>
+                            <div class="flex space-x-2">
+                                <a href="#" class="text-gray-500 hover:text-primary">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="text-gray-500 hover:text-primary">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">
+                            Analytics dashboard for social media managers with data visualization, scheduling, and performance metrics.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full">Vue.js</span>
+                            <span class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 rounded-full">Django</span>
+                            <span class="text-xs px-2 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 rounded-full">Chart.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-flex items-center px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 transition duration-300">
+                    View All Projects <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-100 dark:bg-dark">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">My Skills</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <!-- Skill 1 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-blue-500">
+                        <i class="fab fa-react"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">React</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 90%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 2 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-yellow-500">
+                        <i class="fab fa-js"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">JavaScript</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 95%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 3 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-green-500">
+                        <i class="fab fa-node-js"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Node.js</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 4 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-blue-400">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">MongoDB</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-blue-400 h-2 rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 5 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-purple-500">
+                        <i class="fab fa-css3-alt"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">CSS/Tailwind</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-purple-500 h-2 rounded-full" style="width: 92%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 6 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-pink-500">
+                        <i class="fab fa-figma"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">UI/UX Design</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-pink-500 h-2 rounded-full" style="width: 75%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 7 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-orange-500">
+                        <i class="fab fa-git-alt"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Git</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-orange-500 h-2 rounded-full" style="width: 88%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 8 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-red-500">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">Python</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-red-500 h-2 rounded-full" style="width: 70%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 9 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-blue-600">
+                        <i class="fab fa-aws"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">AWS</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-blue-600 h-2 rounded-full" style="width: 65%"></div>
+                    </div>
+                </div>
+                
+                <!-- Skill 10 -->
+                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-gray-500">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="font-semibold mb-2">DevOps</h3>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-gray-500 h-2 rounded-full" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Get In Touch</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    <p class="mb-8 text-lg">
+                        Feel free to reach out if you're looking for a developer, have a question, or just want to connect.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Location</h4>
+                                <p class="text-gray-600 dark:text-gray-300">San Francisco, CA</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Email</h4>
+                                <p class="text-gray-600 dark:text-gray-300">john@example.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Phone</h4>
+                                <p class="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-medium mb-4">Follow Me</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="h-10 w-10 rounded-full bg-gray-100 dark:bg-dark flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="h-10 w-10 rounded-full bg-gray-100 dark:bg-dark flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="h-10 w-10 rounded-full bg-gray-100 dark:bg-dark flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-blue-400 hover:text-white transition">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="h-10 w-10 rounded-full bg-gray-100 dark:bg-dark flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-1">Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-dark">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-dark">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-sm font-medium mb-1">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-dark">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium mb-1">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-dark"></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition duration-300">
+                            Send Message <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-xl font-bold text-primary">Portfolio</span>
+                    <p class="mt-2">Building digital experiences that matter.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-primary transition">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="hover:text-primary transition">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="hover:text-primary transition">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="hover:text-primary transition">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p>© 2023 John Doe. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-primary transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-primary transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 p-3 bg-primary text-white rounded-full shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+        const html = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        mobileThemeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            mobileMenu.classList.add('hidden');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
+        }
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.project-card, .skill-pill');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.classList.add('animate-fade-in');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
 </html>
