@@ -1,695 +1,1290 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        dark: '#1E293B',
-                        darker: '#0F172A',
-                    },
-                    animation: {
-                        'float': 'float 3s ease-in-out infinite',
-                        'fade-in': 'fadeIn 0.5s ease-in',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s ease;
-        }
-        
-        .nav-link {
-            position: relative;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: currentColor;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        .project-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .skill-pill {
-            transition: transform 0.2s ease;
-        }
-        
-        .skill-pill:hover {
-            transform: scale(1.05);
-        }
-        
-        .dark .glass-effect {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .light .glass-effect {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        .wave {
-            animation: wave 2.5s infinite;
-            transform-origin: 70% 70%;
-            display: inline-block;
-        }
-        
-        @keyframes wave {
-            0% { transform: rotate(0deg); }
-            10% { transform: rotate(14deg); }
-            20% { transform: rotate(-8deg); }
-            30% { transform: rotate(14deg); }
-            40% { transform: rotate(-4deg); }
-            50% { transform: rotate(10deg); }
-            60% { transform: rotate(0deg); }
-            100% { transform: rotate(0deg); }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deeraj Nair — Data Science Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #0f0f18;
+    --surface: #13131f;
+    --border: rgba(255,255,255,0.07);
+    --accent: #c8f03e;
+    --accent2: #4ff0b8;
+    --accent3: #f0a44f;
+    --text: #e8e8f0;
+    --muted: #7a7a9a;
+    --card: #111120;
+    --glow: rgba(200,240,62,0.15);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 5vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,240,62,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,240,62,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+  }
+
+  .hero-orb {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,240,62,0.08) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-orb2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,240,184,0.06) 0%, transparent 70%);
+    bottom: -50px; left: 10%;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 0.95;
+    letter-spacing: -3px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .hero-name .highlight {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(22px, 3vw, 36px);
+    color: var(--muted);
+    margin-bottom: 32px;
+    letter-spacing: -0.5px;
+  }
+
+  .hero-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    padding: 14px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  }
+
+  .btn-primary:hover {
+    background: #d8ff4e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(200,240,62,0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 28px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* PROFILE PHOTO */
+  .hero-photo {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .photo-frame {
+    width: 280px; height: 280px;
+    position: relative;
+  }
+
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, var(--accent), transparent, var(--accent2));
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  }
+
+  .photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    clip-path: polygon(2px 2px, calc(100% - 22px) 2px, calc(100% - 2px) 22px, calc(100% - 2px) calc(100% - 2px), 22px calc(100% - 2px), 2px calc(100% - 22px));
+    filter: grayscale(20%);
+  }
+
+  .photo-badge {
+    position: absolute;
+    bottom: -16px; left: -16px;
+    background: var(--accent);
+    color: #0a0a0f;
+    padding: 8px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 5vw;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background-color: var(--border);
+  }
+
+  .stat-item {
+    background: var(--surface);
+    padding: 20px 32px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* SECTION LAYOUT */
+  section {
+    padding: 100px 5vw;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    padding-bottom: 4px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(32px, 4vw, 52px);
+    letter-spacing: -2px;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 6px;
+  }
+
+  /* ABOUT / EDUCATION + EXPERIENCE */
+  #about {
+    background: var(--bg2);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .edu-timeline, .exp-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .timeline-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 40px 28px;
+    border-left: 1px solid var(--border);
+  }
+
+  .timeline-item:last-child { padding-bottom: 0; border-left-color: transparent; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -5px; top: 6px;
+    width: 9px; height: 9px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent);
+  }
+
+  .timeline-date {
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .timeline-org {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .timeline-role {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--accent2);
+    margin-bottom: 8px;
+  }
+
+  .timeline-loc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+
+  .timeline-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .timeline-desc ul { padding-left: 16px; }
+  .timeline-desc li { margin-bottom: 4px; }
+
+  .timeline-courses {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 6px;
+  }
+
+  /* PROJECTS */
+  #projects { background: var(--bg); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .project-card {
+    background: var(--card);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+  }
+
+  .project-card:hover {
+    z-index: 2;
+    transform: scale(1.02);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+
+  .project-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(30%) brightness(0.85);
+    transition: filter 0.35s, transform 0.35s;
+  }
+
+  .project-card:hover .project-img {
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.05);
+  }
+
+  .project-img-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .project-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(10,10,15,0.9) 100%);
+  }
+
+  .project-body {
+    padding: 20px 24px 24px;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .project-tag {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(200,240,62,0.3);
+    padding: 3px 8px;
+    background: rgba(200,240,62,0.05);
+  }
+
+  .project-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+
+  .project-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .project-link {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+
+  .project-card:hover .project-link { gap: 10px; }
+
+  .project-link::after {
+    content: '→';
+  }
+
+  /* SKILLS */
+  #skills { background: var(--bg2); }
+
+  .skills-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent2);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .skill-group-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .skill-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    font-size: 11px;
+    color: var(--text);
+    margin: 0 6px 8px 0;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .skill-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(200,240,62,0.05);
+  }
+
+  /* CERTIFICATIONS */
+  .cert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cert-item {
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent3);
+    transition: border-color 0.2s;
+  }
+
+  .cert-item:hover { border-left-color: var(--accent); }
+
+  .cert-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+
+  .cert-issuer {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 40px 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--text);
+    letter-spacing: -1px;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* SCROLL ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* FLOATING LABEL */
+  .floating-label {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    z-index: 50;
+  }
+
+  .floating-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .floating-dot.active {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    transform: scale(1.4);
+  }
+
+  @media (max-width: 900px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-photo { display: none; }
+    .about-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr 1fr; }
+    .skills-layout { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .floating-label { display: none; }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .projects-grid { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+  }
+</style>
 </head>
-<body class="bg-gray-50 text-gray-800 dark:bg-darker dark:text-gray-200 transition-colors duration-300">
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-effect">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <span class="text-xl font-bold text-primary">Portfolio</span>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-center space-x-4">
-                        <a href="#home" class="nav-link px-3 py-2 text-sm font-medium">Home</a>
-                        <a href="#about" class="nav-link px-3 py-2 text-sm font-medium">About</a>
-                        <a href="#projects" class="nav-link px-3 py-2 text-sm font-medium">Projects</a>
-                        <a href="#skills" class="nav-link px-3 py-2 text-sm font-medium">Skills</a>
-                        <a href="#contact" class="nav-link px-3 py-2 text-sm font-medium">Contact</a>
-                        <button id="theme-toggle" class="p-2 rounded-full focus:outline-none">
-                            <i class="fas fa-moon text-gray-800 dark:text-yellow-300"></i>
-                            <i class="fas fa-sun text-gray-200 dark:hidden"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="p-2 rounded-md focus:outline-none">
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden glass-effect">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="block px-3 py-2 text-base font-medium">Home</a>
-                <a href="#about" class="block px-3 py-2 text-base font-medium">About</a>
-                <a href="#projects" class="block px-3 py-2 text-base font-medium">Projects</a>
-                <a href="#skills" class="block px-3 py-2 text-base font-medium">Skills</a>
-                <a href="#contact" class="block px-3 py-2 text-base font-medium">Contact</a>
-                <button id="mobile-theme-toggle" class="block px-3 py-2 text-left text-base font-medium">
-                    Toggle Theme
-                </button>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center pt-16">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
-                        Hi, I'm <span class="text-primary">John Doeee</span> <span class="wave">👋</span>
-                    </h1>
-                    <h2 class="text-2xl md:text-3xl font-semibold mb-6 text-secondary">
-                        Full Stack Developer
-                    </h2>
-                    <p class="text-lg mb-8 max-w-lg">
-                        I build exceptional digital experiences that are fast, accessible, and visually appealing.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#contact" class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition duration-300">
-                            Contact Me
-                        </a>
-                        <a href="#projects" class="px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 transition duration-300">
-                            View Work
-                        </a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <div class="relative w-64 h-64 md:w-80 md:h-80">
-                        <div class="absolute inset-0 bg-primary rounded-full opacity-20 animate-pulse"></div>
-                        <div class="absolute inset-4 bg-secondary rounded-full opacity-20 animate-pulse delay-100"></div>
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
-                             alt="Profile" 
-                             class="relative w-full h-full rounded-full object-cover border-4 border-white dark:border-gray-800 shadow-xl">
-                    </div>
-                </div>
-            </div>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">DEERAJ<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+</nav>
+
+<!-- FLOATING NAV DOTS -->
+<div class="floating-label" id="navDots">
+  <div class="floating-dot active" data-target="hero" title="Home"></div>
+  <div class="floating-dot" data-target="about" title="About"></div>
+  <div class="floating-dot" data-target="projects" title="Projects"></div>
+  <div class="floating-dot" data-target="skills" title="Skills"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-eyebrow">Available for opportunities</div>
+      <h1 class="hero-name">
+        DEERAJ<br><span class="highlight">NAIR</span>
+      </h1>
+      <div class="hero-title">Data Science Enthusiast</div>
+      <p class="hero-desc">
+        Graduate student at Indiana University — Bloomington, specializing in Data Science. Passionate about analytics, machine learning, and data-driven decision making.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="#about" class="btn-outline">About Me</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-frame">
+        <img src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/profile_pic.jpg" alt="Deeraj Nair">
+      </div>
+      <div class="photo-badge">Data Scientist</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">15+</div>
+    <div class="stat-label">Projects</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Internships</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">8+</div>
+    <div class="stat-label">Certifications</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">1M+</div>
+    <div class="stat-label">Records Analyzed</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-up">
+    <span class="section-num">01 /</span>
+    <h2 class="section-title">About</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <!-- Education -->
+    <div class="fade-up">
+      <div class="timeline-label">Education</div>
+      <div class="edu-timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">Aug 2023 – May 2025</div>
+          <div class="timeline-org">Indiana University – Bloomington</div>
+          <div class="timeline-role">Masters, Data Science</div>
+          <div class="timeline-courses">Data Mining · Advanced Database · Statistics · Big Data in Economics · Data Visualization · Database Design</div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-100 dark:bg-dark">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">About Me</h2>
-                <div class="w-20 h-1 bg-primary mx-auto"></div>
-            </div>
-            
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="md:w-1/3 flex justify-center">
-                    <div class="relative w-64 h-64">
-                        <div class="absolute -inset-4 bg-primary/10 rounded-2xl -rotate-6"></div>
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
-                             alt="About" 
-                             class="relative w-full h-full rounded-xl object-cover shadow-lg">
-                    </div>
-                </div>
-                
-                <div class="md:w-2/3">
-                    <h3 class="text-2xl font-semibold mb-6">Who am I?</h3>
-                    <p class="mb-6 text-lg">
-                        I'm a passionate Full Stack Developer with 5+ years of experience creating web applications. 
-                        I specialize in JavaScript technologies across the whole stack (React, Node.js, Express, MongoDB).
-                    </p>
-                    <p class="mb-6 text-lg">
-                        My approach combines technical expertise with an eye for design to deliver products that are both 
-                        powerful and intuitive. I believe in writing clean, efficient code and creating seamless user experiences.
-                    </p>
-                    
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div>
-                            <p class="font-medium"><span class="text-primary">Name:</span> John Doe</p>
-                            <p class="font-medium"><span class="text-primary">Email:</span> john@example.com</p>
-                        </div>
-                        <div>
-                            <p class="font-medium"><span class="text-primary">From:</span> San Francisco, CA</p>
-                            <p class="font-medium"><span class="text-primary">Freelance:</span> Available</p>
-                        </div>
-                    </div>
-                    
-                    <a href="#" class="inline-flex items-center px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition duration-300">
-                        Download CV <i class="fas fa-download ml-2"></i>
-                    </a>
-                </div>
-            </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Aug 2019 – May 2023</div>
+          <div class="timeline-org">SRM University</div>
+          <div class="timeline-role">Bachelors, Computer Science</div>
+          <div class="timeline-courses">Artificial Intelligence · Data Structures & Algorithms · Database Management Systems</div>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-20">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">My Projects</h2>
-                <div class="w-20 h-1 bg-primary mx-auto"></div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="project-card bg-white dark:bg-dark rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                             alt="Project 1" 
-                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold">E-commerce Platform</h3>
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-gray-500 hover:text-primary">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="text-gray-500 hover:text-primary">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">
-                            A full-featured e-commerce platform with payment integration, product management, and user authentication.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full">React</span>
-                            <span class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 rounded-full">Node.js</span>
-                            <span class="text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-200 rounded-full">MongoDB</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 2 -->
-                <div class="project-card bg-white dark:bg-dark rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" 
-                             alt="Project 2" 
-                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold">Task Management App</h3>
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-gray-500 hover:text-primary">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="text-gray-500 hover:text-primary">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">
-                            A collaborative task management application with real-time updates, drag-and-drop interface, and team features.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full">React</span>
-                            <span class="text-xs px-2 py-1 bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200 rounded-full">Firebase</span>
-                            <span class="text-xs px-2 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200 rounded-full">Tailwind CSS</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project 3 -->
-                <div class="project-card bg-white dark:bg-dark rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <div class="h-48 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
-                             alt="Project 3" 
-                             class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <h3 class="text-xl font-bold">Social Media Dashboard</h3>
-                            <div class="flex space-x-2">
-                                <a href="#" class="text-gray-500 hover:text-primary">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="text-gray-500 hover:text-primary">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <p class="text-gray-600 dark:text-gray-300 mb-4">
-                            Analytics dashboard for social media managers with data visualization, scheduling, and performance metrics.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200 rounded-full">Vue.js</span>
-                            <span class="text-xs px-2 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200 rounded-full">Django</span>
-                            <span class="text-xs px-2 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-800 dark:text-indigo-200 rounded-full">Chart.js</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center px-6 py-3 border border-primary text-primary rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-blue-900/30 transition duration-300">
-                    View All Projects <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-            </div>
+    <!-- Experience -->
+    <div class="fade-up">
+      <div class="timeline-label">Experience</div>
+      <div class="exp-timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">Jun 2025 – Present</div>
+          <div class="timeline-org">Heartland Community Network</div>
+          <div class="timeline-role">Data Analyst</div>
+          <div class="timeline-loc">Bloomington, Indiana</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Built automated ETL pipelines in Python + BigQuery for 11-county workforce data, reducing manual reporting by 40%.</li>
+              <li>Designed SQL-based data marts to standardize multi-source datasets (FRED, ACS, IPEDS).</li>
+              <li>Developed interactive Tableau dashboards enabling data-driven workforce planning.</li>
+            </ul>
+          </div>
         </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="py-20 bg-gray-100 dark:bg-dark">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">My Skills</h2>
-                <div class="w-20 h-1 bg-primary mx-auto"></div>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                <!-- Skill 1 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-blue-500">
-                        <i class="fab fa-react"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">React</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-blue-500 h-2 rounded-full" style="width: 90%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 2 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-yellow-500">
-                        <i class="fab fa-js"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">JavaScript</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 95%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 3 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-green-500">
-                        <i class="fab fa-node-js"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Node.js</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-green-500 h-2 rounded-full" style="width: 85%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 4 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-blue-400">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">MongoDB</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-blue-400 h-2 rounded-full" style="width: 80%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 5 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-purple-500">
-                        <i class="fab fa-css3-alt"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">CSS/Tailwind</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-purple-500 h-2 rounded-full" style="width: 92%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 6 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-pink-500">
-                        <i class="fab fa-figma"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">UI/UX Design</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-pink-500 h-2 rounded-full" style="width: 75%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 7 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-orange-500">
-                        <i class="fab fa-git-alt"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Git</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-orange-500 h-2 rounded-full" style="width: 88%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 8 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-red-500">
-                        <i class="fab fa-python"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">Python</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-red-500 h-2 rounded-full" style="width: 70%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 9 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-blue-600">
-                        <i class="fab fa-aws"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">AWS</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-blue-600 h-2 rounded-full" style="width: 65%"></div>
-                    </div>
-                </div>
-                
-                <!-- Skill 10 -->
-                <div class="skill-pill text-center p-6 bg-white dark:bg-darker rounded-xl shadow-md hover:shadow-lg transition-shadow">
-                    <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center text-4xl text-gray-500">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3 class="font-semibold mb-2">DevOps</h3>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-gray-500 h-2 rounded-full" style="width: 60%"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jan 2025 – Jun 2025</div>
+          <div class="timeline-org">Indiana University, Bloomington</div>
+          <div class="timeline-role">Research Analyst</div>
+          <div class="timeline-loc">Bloomington, Indiana</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Automated neuroimaging data preprocessing (Bash, Python, FSL).</li>
+              <li>Structured analysis-ready datasets from raw MRI/fMRI files.</li>
+              <li>Delivered technical summaries translating complex modeling outputs for academic stakeholders.</li>
+            </ul>
+          </div>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold mb-4">Get In Touch</h2>
-                <div class="w-20 h-1 bg-primary mx-auto"></div>
-            </div>
-            
-            <div class="flex flex-col md:flex-row gap-12">
-                <div class="md:w-1/2">
-                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
-                    <p class="mb-8 text-lg">
-                        Feel free to reach out if you're looking for a developer, have a question, or just want to connect.
-                    </p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Location</h4>
-                                <p class="text-gray-600 dark:text-gray-300">San Francisco, CA</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Email</h4>
-                                <p class="text-gray-600 dark:text-gray-300">john@example.com</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mr-4">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-medium">Phone</h4>
-                                <p class="text-gray-600 dark:text-gray-300">+1 (555) 123-4567</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-8">
-                        <h4 class="font-medium mb-4">Follow Me</h4>
-                        <div class="flex space-x-4">
-                            <a href="#" class="h-10 w-10 rounded-full bg-gray-100 dark:bg-dark flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="#" class="h-10 w-10 rounded-full bg-gray-100 dark:bg-dark flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white transition">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="#" class="h-10 w-10 rounded-full bg-gray-100 dark:bg-dark flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-blue-400 hover:text-white transition">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="h-10 w-10 rounded-full bg-gray-100 dark:bg-dark flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-pink-500 hover:text-white transition">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="md:w-1/2">
-                    <form class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="name" class="block text-sm font-medium mb-1">Name</label>
-                                <input type="text" id="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-dark">
-                            </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium mb-1">Email</label>
-                                <input type="email" id="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-dark">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="subject" class="block text-sm font-medium mb-1">Subject</label>
-                            <input type="text" id="subject" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-dark">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium mb-1">Message</label>
-                            <textarea id="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent dark:bg-dark"></textarea>
-                        </div>
-                        <button type="submit" class="w-full px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition duration-300">
-                            Send Message <i class="fas fa-paper-plane ml-2"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Jun 2024 – Jul 2024</div>
+          <div class="timeline-org">DataMingle Analytics Pvt Ltd</div>
+          <div class="timeline-role">Data Science Intern</div>
+          <div class="timeline-loc">Mumbai, India</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>EDA and feature engineering on 1M+ supply chain records for backorder prediction.</li>
+              <li>Built Power BI dashboards tracking SKU risk — contributed to 15% reduction in stockouts.</li>
+            </ul>
+          </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-dark text-gray-300 py-12">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <span class="text-xl font-bold text-primary">Portfolio</span>
-                    <p class="mt-2">Building digital experiences that matter.</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-primary transition">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="hover:text-primary transition">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="#" class="hover:text-primary transition">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="hover:text-primary transition">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p>© 2023 John Doe. All rights reserved.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-primary transition">Privacy Policy</a>
-                    <a href="#" class="hover:text-primary transition">Terms of Service</a>
-                </div>
-            </div>
+        <div class="timeline-item">
+          <div class="timeline-date">Oct 2022 – Apr 2023</div>
+          <div class="timeline-org">Empliance Technologies Pvt Ltd</div>
+          <div class="timeline-role">Data Science Intern</div>
+          <div class="timeline-loc">Mumbai, India</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Automated data cleaning workflows in Python, reducing manual reporting errors.</li>
+              <li>Designed KPI validation checks and anomaly detection rules.</li>
+            </ul>
+          </div>
         </div>
-    </footer>
+        <div class="timeline-item">
+          <div class="timeline-date">Sep 2020 – Nov 2020</div>
+          <div class="timeline-org">Skillvertex</div>
+          <div class="timeline-role">Data Science Intern</div>
+          <div class="timeline-loc">Remote</div>
+          <div class="timeline-desc">
+            <ul>
+              <li>Built supervised ML models to identify customer behavioral patterns.</li>
+              <li>Created dashboards translating model outputs — improved decision efficiency by 30%.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Back to Top Button -->
-    <button id="back-to-top" class="fixed bottom-8 right-8 p-3 bg-primary text-white rounded-full shadow-lg opacity-0 invisible transition-all duration-300">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header fade-up">
+    <span class="section-num">02 /</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
 
-    <script>
-        // Mobile menu toggle
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+  <div class="projects-grid fade-up">
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-DNTa8OQM2PNjdbVOpkpu3XN1z4gSzc.png" alt="NYC Vegetarian & Vegan Dining">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">SQL</span><span class="project-tag">Web Scraping</span><span class="project-tag">Pandas</span>
+        </div>
+        <div class="project-name">Exploring NYC's Vegetarian & Vegan Dining Options</div>
+        <div class="project-desc">Scraped, analyzed, and cleaned restaurant datasets to extract business insights for vegetarian and vegan dining options in NYC.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/0oVBNMJ0va64jQyUOUBlH.png" alt="Nurse Attrition Analysis">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Excel</span><span class="project-tag">Power BI</span><span class="project-tag">Healthcare</span><span class="project-tag">KPIs</span>
+        </div>
+        <div class="project-name">Nurse Attrition Analysis: Identifying Risk Drivers & Retention Opportunities</div>
+        <div class="project-desc">A data-driven investigation into why nurses leave and how to keep them.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/3d-automated-supply-chain-management-systems_1230253-5343.jpg" alt="Automated Supply Chain Reporting Tool">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Excel</span><span class="project-tag">VBA</span><span class="project-tag">Macros</span><span class="project-tag">Supply Chain</span>
+        </div>
+        <div class="project-name">Automated Supply Chain Reporting Tool</div>
+        <div class="project-desc">Excel VBA–based automation tool that imports raw order-level data, applies SLA logic, flags exceptions, and generates executive KPI reports.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/Screenshot%202026-02-19%20152118.png" alt="Crowdfunding Financial Insights">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">SQL</span><span class="project-tag">Power BI</span><span class="project-tag">Pandas</span><span class="project-tag">KPI</span>
+        </div>
+        <div class="project-name">Crowdfunding Financial Insights</div>
+        <div class="project-desc">End-to-end analytics for Kickstarter campaigns using SQL (CTEs, normalization) and Power BI. 10,000+ projects, 35% success rate, $2.5B pledged.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/istockphoto-1878347043-612x612.jpg" alt="Walmart Retail Performance Analytics">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">PostgreSQL</span><span class="project-tag">Tableau</span><span class="project-tag">Pandas</span>
+        </div>
+        <div class="project-name">Walmart Retail Performance Analytics</div>
+        <div class="project-desc">Analyzed 5,000+ 2024 Walmart transactions to uncover sales trends, customer behavior, and product performance with interactive dashboards.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/AB-Testing-and-Conversion-Rate-Optimization.webp" alt="A/B Testing">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">A/B Testing</span><span class="project-tag">Statistics</span><span class="project-tag">Jupyter</span>
+        </div>
+        <div class="project-name">E-commerce A/B Testing: Conversion Rate Optimization</div>
+        <div class="project-desc">End-to-end A/B testing: experiment design, funnel analysis, statistical inference, and business decision-making using real clickstream data.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/1_vWt3kdIdCXJB6-6JDmxg3A-rajtguRWnUrrfGpVWnPfcr7U8TPdpc.jpg" alt="Backorder Prediction">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">XGBoost</span><span class="project-tag">SQL</span><span class="project-tag">Power BI</span>
+        </div>
+        <div class="project-name">Backorder Prediction</div>
+        <div class="project-desc">Machine learning model to predict product backorders, reducing supply chain disruptions and improving inventory management.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/Screenshot%202025-04-04%20222730-QeDIfTpKA0WhZrh9IqQqRVCKIZiLff.png" alt="Talk2Data AI SQL Assistant">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">Gen AI</span><span class="project-tag">Streamlit</span><span class="project-tag">LLM</span>
+        </div>
+        <div class="project-name">Talk2Data AI SQL Assistant</div>
+        <div class="project-desc">GenAI-powered SQL assistant that lets users interact with any dataset using natural language — no SQL knowledge required.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/OIP-8vHRDebQGYQUvogtQc1eBh5Z4cFYhl.jpeg" alt="Global Port Efficiency Dashboard">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Excel</span><span class="project-tag">Pivot Tables</span><span class="project-tag">KPI</span><span class="project-tag">Visualization</span>
+        </div>
+        <div class="project-name">Global Port Efficiency Dashboard</div>
+        <div class="project-desc">Excel-based dashboard analyzing global port efficiency using UNCTAD data — automated KPIs, combo & scatter charts across 6 years.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/May%2015%2C%202025%2C%2005_02_59%20PM-Bbz4D9ySeYtgkw7EDSgbLHAuYHTxAx.png" alt="CMS Hospital Rating Prediction">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">R</span><span class="project-tag">SMOTE</span><span class="project-tag">Random Forest</span><span class="project-tag">ML</span>
+        </div>
+        <div class="project-name">CMS Hospital Rating Prediction (3-Class Model)</div>
+        <div class="project-desc">3-class classification model using CMS hospital data to predict healthcare quality ratings, incorporating SMOTE for class balancing.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/7%20sales%20dashboards%20Header%20Image-jPoc16ZeFDnFD4Lu0sgixoY0wHFdpR.webp" alt="Sales Analytics Dashboard">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Power BI</span><span class="project-tag">DAX</span><span class="project-tag">SQL</span><span class="project-tag">ETL</span>
+        </div>
+        <div class="project-name">Sales Analytics Dashboard</div>
+        <div class="project-desc">Dynamic Power BI dashboard tracking sales, shipment costs, and product profitability across multiple regions.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/flipkart-Vx1DyOfr1pS8MZuFGOf2YLeTLNkWew.webp" alt="Flipkart Data Scraper">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">BeautifulSoup</span><span class="project-tag">Selenium</span><span class="project-tag">MongoDB</span>
+        </div>
+        <div class="project-name">Flipkart Data Scraper</div>
+        <div class="project-desc">Web scraping tool to extract product information, pricing data, and customer reviews from Flipkart for competitive analysis.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/Screenshot%202025-03-24%20162648-KjQloqgPc2HcVGhsua2YQ6Fod1UKQO.png" alt="Toxic & Sarcastic Comment Classifier">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Python</span><span class="project-tag">NLP</span><span class="project-tag">BERT</span><span class="project-tag">TensorFlow</span>
+        </div>
+        <div class="project-name">Toxic & Sarcastic Comment Classifier</div>
+        <div class="project-desc">NLP models to classify social media comments into toxicity levels and detect sarcasm using BERT and sentiment analysis.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/British-Airways-5688628-tofhIfWkksQfI3VDbAKuIOU7fjuHPE.webp" alt="British Airways Dashboard">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Tableau</span><span class="project-tag">SQL</span><span class="project-tag">Customer Analytics</span>
+        </div>
+        <div class="project-name">British Airways Customer Satisfaction Analysis Dashboard</div>
+        <div class="project-desc">Interactive Tableau dashboard analyzing British Airways customer reviews to uncover key insights into service performance.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+    <a class="project-card" href="https://deerajnair.vercel.app/#" target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img class="project-img" src="https://ijwsyq94bt6iabgj.public.blob.vercel-storage.com/Screenshot%202026-01-16%20175132.png" alt="Education & Population Demographics Dashboard">
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Tableau</span><span class="project-tag">Geospatial</span><span class="project-tag">Data Storytelling</span>
+        </div>
+        <div class="project-name">Education & Population Demographics Dashboard</div>
+        <div class="project-desc">Interactive Tableau dashboard analyzing population trends, education attainment, and county-level growth patterns for regional planning.</div>
+        <div class="project-link">Learn More</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header fade-up">
+    <span class="section-num">03 /</span>
+    <h2 class="section-title">Skills</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="skills-layout">
+    <div class="skills-grid fade-up">
+      <div>
+        <div class="skill-group-title">Languages</div>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">Pandas</span>
+        <span class="skill-pill">NumPy</span>
+        <span class="skill-pill">Scikit-learn</span>
+        <span class="skill-pill">PySpark</span>
+        <span class="skill-pill">R</span>
+        <span class="skill-pill">SQL</span>
+        <span class="skill-pill">HTML</span>
+        <span class="skill-pill">C++</span>
+      </div>
+      <div>
+        <div class="skill-group-title">Visualization</div>
+        <span class="skill-pill">Power BI</span>
+        <span class="skill-pill">Tableau</span>
+        <span class="skill-pill">Matplotlib</span>
+        <span class="skill-pill">Plotly</span>
+        <span class="skill-pill">Seaborn</span>
+        <span class="skill-pill">Looker Studio</span>
+        <span class="skill-pill">Folium</span>
+        <span class="skill-pill">ggplot</span>
+      </div>
+      <div>
+        <div class="skill-group-title">Tools & Software</div>
+        <span class="skill-pill">Excel (VBA)</span>
+        <span class="skill-pill">Streamlit</span>
+        <span class="skill-pill">Selenium</span>
+        <span class="skill-pill">AWS</span>
+        <span class="skill-pill">GitHub</span>
+        <span class="skill-pill">Gen AI & ML</span>
+        <span class="skill-pill">ERD</span>
+        <span class="skill-pill">APIs</span>
+      </div>
+      <div>
+        <div class="skill-group-title">Databases & Cloud</div>
+        <span class="skill-pill">MySQL</span>
+        <span class="skill-pill">PostgreSQL</span>
+        <span class="skill-pill">SQLite</span>
+        <span class="skill-pill">MongoDB</span>
+        <span class="skill-pill">Snowflake</span>
+        <span class="skill-pill">BigQuery</span>
+      </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="fade-up">
+      <div class="skill-group-title">Certifications</div>
+      <div class="cert-list">
+        <div class="cert-item">
+          <div class="cert-name">Data Analysis in Healthcare</div>
+          <div class="cert-issuer">ELVTR — Jesse Andrist</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">AWS Certified Cloud Practitioner</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">AI for Data Professionals</div>
+          <div class="cert-issuer">Analyst Builder</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">Data Science & ML: Making Data-Driven Decisions</div>
+          <div class="cert-issuer">MIT — 12-week program</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">Business and Operation Analytics</div>
+          <div class="cert-issuer">NITIE — Prof. David Simchi-Levi</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">Supply Chain Management Specialization</div>
+          <div class="cert-issuer">Rutgers University — Prof. Rudolf Leuschner</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">Applied Generative AI for Digital Transformation</div>
+          <div class="cert-issuer">MIT — 6.4 CEUs</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">SQL Associate Certification</div>
+          <div class="cert-issuer">DataCamp</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-name">Snowflake Foundations</div>
+          <div class="cert-issuer">DataCamp</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">DEERAJ<span>.</span></div>
+  <div class="footer-copy">© 2026 Designed & Built by Deeraj Nair</div>
+  <nav class="footer-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+  </nav>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Nav dots
+  const dots = document.querySelectorAll('.floating-dot');
+  const sections = ['hero','about','projects','skills'];
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        dots.forEach((d, i) => {
+          d.classList.toggle('active', sections[i] === id);
         });
-        
-        // Theme toggle
-        const themeToggle = document.getElementById('theme-toggle');
-        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
-        const html = document.documentElement;
-        
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-        });
-        
-        mobileThemeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark');
-            mobileMenu.classList.add('hidden');
-            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-        });
-        
-        // Check for saved theme preference
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            html.classList.add('dark');
-        } else {
-            html.classList.remove('dark');
-        }
-        
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    mobileMenu.classList.add('hidden');
-                }
-            });
-        });
-        
-        // Back to top button
-        const backToTopButton = document.getElementById('back-to-top');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopButton.classList.remove('opacity-0', 'invisible');
-                backToTopButton.classList.add('opacity-100', 'visible');
-            } else {
-                backToTopButton.classList.remove('opacity-100', 'visible');
-                backToTopButton.classList.add('opacity-0', 'invisible');
-            }
-        });
-        
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // Animation on scroll
-        const animateOnScroll = () => {
-            const elements = document.querySelectorAll('.project-card, .skill-pill');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-                
-                if (elementPosition < screenPosition) {
-                    element.classList.add('animate-fade-in');
-                }
-            });
-        };
-        
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-    </script>
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      document.getElementById(sections[i])?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
 </body>
 </html>
